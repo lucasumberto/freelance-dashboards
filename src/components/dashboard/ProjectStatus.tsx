@@ -20,7 +20,7 @@ export default function ProjectStatus({ projects }: ProjectStatusProps) {
   const total = projects.length;
 
   return (
-    <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+    <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm h-full">
       <h3 className="text-lg font-semibold text-gray-900 mb-4">Status dos Projetos</h3>
       <div className="space-y-4">
         {Object.entries(statusCount).map(([status, count]) => {
