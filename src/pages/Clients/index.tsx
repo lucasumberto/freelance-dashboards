@@ -1,14 +1,11 @@
-import { useQuery } from '@tanstack/react-query';
-import { mockHandlers } from '../../api/mocks/handlers';
+import { useClients } from '../../hooks/useClients';
 import DataTable from '../../components/shared/DataTable';
 import LoadingSpinner from '../../components/shared/LoadingSpinner';
+import NewClientDialog from '../../components/clients/NewClientDialog';
 import type { Client } from '../../types';
 
 export default function Clients() {
-  const { data: clients, isLoading } = useQuery({
-    queryKey: ['clients'],
-    queryFn: mockHandlers.getClients,
-  });
+  const { clients, isLoading, createClient } = useClients();
 
   const columns = [
     {
@@ -58,9 +55,7 @@ export default function Clients() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-900">Clientes</h1>
-        <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-          Novo Cliente
-        </button>
+        <NewClientDialog onClientCreated={(data) => createClient(data)} />
       </div>
       
       <DataTable data={clients || []} columns={columns} searchable searchPlaceholder="Buscar clientes..." />
