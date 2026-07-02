@@ -1,10 +1,11 @@
 import { useParams } from 'react-router-dom';
 import { useProjects } from '../../hooks/useProjects';
 import LoadingSpinner from '../../components/shared/LoadingSpinner';
+import EditProjectDialog from '../../components/projects/EditProjectDialog';
 
 export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
-  const { projects, isLoading } = useProjects();
+  const { projects, isLoading, updateProject } = useProjects();
 
   const project = projects.find(p => p.id === id);
 
@@ -28,9 +29,7 @@ export default function ProjectDetail() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-900">{project.name}</h1>
-        <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-          Editar
-        </button>
+        <EditProjectDialog project={project} onProjectUpdated={updateProject} />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

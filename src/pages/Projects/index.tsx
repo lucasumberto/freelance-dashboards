@@ -1,10 +1,18 @@
+import { Link } from 'react-router-dom';
+import { Eye } from 'lucide-react';
 import { useProjects } from '../../hooks/useProjects';
 import DataTable from '../../components/shared/DataTable';
 import LoadingSpinner from '../../components/shared/LoadingSpinner';
+import NewProjectDialog from '../../components/projects/NewProjectDialog';
 import type { Project } from '../../types';
 
 export default function Projects() {
   const { projects, isLoading } = useProjects();
+
+  const handleProjectCreated = (projectData: Omit<Project, 'id' | 'progress' | 'actualCost'>) => {
+    console.log('Novo projeto:', projectData);
+    // TODO: Implementar lógica de criação de projeto
+  };
 
   const columns = [
     {
@@ -56,6 +64,19 @@ export default function Projects() {
         </div>
       ),
     },
+    {
+      key: 'actions' as keyof Project,
+      label: 'Ações',
+      render: (_: any, row: Project) => (
+        <Link
+          to={`/projects/${row.id}`}
+          className="inline-flex items-center gap-1 px-3 py-1.5 text-sm text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors"
+        >
+          <Eye className="w-4 h-4" />
+          Visualizar
+        </Link>
+      ),
+    },
   ];
 
   if (isLoading) {
@@ -70,9 +91,7 @@ export default function Projects() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-900">Projetos</h1>
-        <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-          Novo Projeto
-        </button>
+        <NewProjectDialog onProjectCreated={handleProjectCreated} />
       </div>
       
       <DataTable data={projects} columns={columns} searchable searchPlaceholder="Buscar projetos..." />
