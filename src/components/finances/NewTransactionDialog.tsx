@@ -53,9 +53,7 @@ export default function NewTransactionDialog({ onTransactionCreated }: NewTransa
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-          Nova Transação
-        </Button>
+        <Button>Nova Transação</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>

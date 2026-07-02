@@ -59,9 +59,7 @@ export default function NewProjectDialog({ onProjectCreated }: NewProjectDialogP
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-          Novo Projeto
-        </Button>
+        <Button>Novo Projeto</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>

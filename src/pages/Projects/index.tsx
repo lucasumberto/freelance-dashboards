@@ -70,7 +70,7 @@ export default function Projects() {
       render: (_: any, row: Project) => (
         <Link
           to={`/projects/${row.id}`}
-          className="inline-flex items-center gap-1 px-3 py-1.5 text-sm text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors"
+          className="inline-flex items-center gap-1 px-3 py-1.5 text-sm text-primary hover:text-primary/80 hover:bg-primary/10 rounded-lg transition-colors"
         >
           <Eye className="w-4 h-4" />
           Visualizar
