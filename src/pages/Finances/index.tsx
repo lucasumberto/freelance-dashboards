@@ -1,14 +1,12 @@
-import { useQuery } from '@tanstack/react-query';
-import { mockHandlers } from '../../api/mocks/handlers';
+import { useFinances } from '../../hooks/useFinances';
 import DataTable from '../../components/shared/DataTable';
 import LoadingSpinner from '../../components/shared/LoadingSpinner';
+import NewTransactionDialog from '../../components/finances/NewTransactionDialog';
+import EditTransactionDialog from '../../components/finances/EditTransactionDialog';
 import type { Transaction } from '../../types';
 
 export default function Finances() {
-  const { data: transactions, isLoading } = useQuery({
-    queryKey: ['transactions'],
-    queryFn: mockHandlers.getTransactions,
-  });
+  const { transactions, isLoading, createTransaction, updateTransaction } = useFinances();
 
   const columns = [
     {
@@ -44,6 +42,16 @@ export default function Finances() {
       label: 'Data',
       render: (value: string) => new Date(value).toLocaleDateString('pt-BR'),
     },
+    {
+      key: 'actions' as keyof Transaction,
+      label: 'Ações',
+      render: (_: unknown, row: Transaction) => (
+        <EditTransactionDialog 
+          transaction={row} 
+          onTransactionUpdated={(id, data) => updateTransaction({ id, data })} 
+        />
+      ),
+    },
   ];
 
   if (isLoading) {
@@ -58,9 +66,7 @@ export default function Finances() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-900">Finanças</h1>
-        <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-          Nova Transação
-        </button>
+        <NewTransactionDialog onTransactionCreated={(data) => createTransaction(data)} />
       </div>
       
       <DataTable data={transactions || []} columns={columns} searchable searchPlaceholder="Buscar transações..." />
