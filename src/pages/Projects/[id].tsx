@@ -29,7 +29,7 @@ export default function ProjectDetail() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-900">{project.name}</h1>
-        <EditProjectDialog project={project} onProjectUpdated={updateProject} />
+        <EditProjectDialog project={project} onProjectUpdated={(id, data) => updateProject({ id, data })} />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
