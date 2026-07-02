@@ -2,10 +2,11 @@ import { useClients } from '../../hooks/useClients';
 import DataTable from '../../components/shared/DataTable';
 import LoadingSpinner from '../../components/shared/LoadingSpinner';
 import NewClientDialog from '../../components/clients/NewClientDialog';
+import EditClientDialog from '../../components/clients/EditClientDialog';
 import type { Client } from '../../types';
 
 export default function Clients() {
-  const { clients, isLoading, createClient } = useClients();
+  const { clients, isLoading, createClient, updateClient } = useClients();
 
   const columns = [
     {
@@ -40,6 +41,16 @@ export default function Clients() {
       key: 'totalSpent' as keyof Client,
       label: 'Total Gasto',
       render: (value: number) => `R$ ${value.toLocaleString()}`,
+    },
+    {
+      key: 'actions' as keyof Client,
+      label: 'Ações',
+      render: (_: unknown, row: Client) => (
+        <EditClientDialog 
+          client={row} 
+          onClientUpdated={(id, data) => updateClient({ id, data })} 
+        />
+      ),
     },
   ];
 
