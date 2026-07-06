@@ -6,9 +6,10 @@ export default function LoadingSpinner({ size = 'md' }: { size?: 'sm' | 'md' | '
   };
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center" data-testid="loading-spinner">
       <div
         className={`${sizeClasses[size]} border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin`}
+        data-testid="spinner-element"
       />
     </div>
   );
