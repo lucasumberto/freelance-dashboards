@@ -1,17 +1,19 @@
 # Freelance Dashboards
 
-Um dashboard moderno para gerenciamento de projetos freelancers, desenvolvido com React, TypeScript e Vite. Este projeto serve como portfólio demonstrando boas práticas de desenvolvimento frontend.
+Um dashboard moderno para gerenciamento de projetos freelancers, desenvolvido com Next.js, TypeScript e TailwindCSS. Este projeto serve como portfólio demonstrando boas práticas de desenvolvimento frontend.
 
 ## 🚀 Tecnologias
 
-- **React 18** - Biblioteca UI para construção de interfaces
+- **Next.js 15** - Framework React com App Router e Server Components
+- **React 19** - Biblioteca UI para construção de interfaces
 - **TypeScript** - Tipagem estática para maior segurança no código
-- **Vite** - Build tool rápido e otimizado
-- **React Router** - Roteamento client-side
 - **TanStack Query** - Gerenciamento de estado e cache de dados
 - **TailwindCSS** - Framework CSS utilitário
 - **shadcn/ui** - Componentes UI reutilizáveis e acessíveis
 - **Lucide React** - Ícones modernos e consistentes
+- **Recharts** - Biblioteca de gráficos para visualização de dados
+- **Jest** - Framework de testes
+- **Axios** - Cliente HTTP para requisições de API
 
 ## 📋 Funcionalidades
 
@@ -35,23 +37,23 @@ Um dashboard moderno para gerenciamento de projetos freelancers, desenvolvido co
 ```
 src/
 ├── api/              # Configurações de API e handlers
+├── app/              # Páginas do Next.js App Router
+│   ├── clients/      # Página de clientes
+│   ├── finances/     # Página de finanças
+│   ├── projects/     # Página de projetos
+│   ├── layout.tsx    # Layout raiz da aplicação
+│   └── page.tsx      # Página inicial (dashboard)
 ├── assets/           # Imagens e recursos estáticos
 ├── components/       # Componentes reutilizáveis
-│   ├── dashboard/    # Componentes do dashboard
-│   ├── layout/       # Componentes de layout (Header, Sidebar)
-│   ├── projects/     # Componentes específicos de projetos
 │   ├── clients/      # Componentes específicos de clientes
+│   ├── dashboard/    # Componentes do dashboard
 │   ├── finances/     # Componentes específicos de finanças
+│   ├── projects/     # Componentes específicos de projetos
 │   ├── shared/       # Componentes compartilhados (DataTable, LoadingSpinner)
 │   └── ui/           # Componentes UI base (shadcn/ui)
 ├── hooks/            # Custom hooks (useProjects, useClients, useFinances)
-├── pages/            # Páginas da aplicação
-│   ├── Dashboard/
-│   ├── Projects/
-│   ├── Clients/
-│   └── Finances/
 ├── types/            # Definições de tipos TypeScript
-└── utils/            # Funções utilitárias
+└── globals.css       # Estilos globais e variáveis CSS
 ```
 
 ## 🎨 Boas Práticas Implementadas
@@ -78,14 +80,14 @@ src/
 - Variáveis CSS como `--primary`, `--foreground` para consistência
 
 ### 5. **Roteamento**
-- Rotas aninhadas para páginas de detalhes (`/projects/:id`)
-- Navegação programática com React Router
-- Links semânticos para melhor acessibilidade
+- Next.js App Router com rotas baseadas em sistema de arquivos
+- Rotas dinâmicas para páginas de detalhes (`/projects/[id]`)
+- Links semânticos com componente Link do Next.js
 
 ### 6. **Performance**
-- Lazy loading de componentes quando necessário
+- Server Components do Next.js para renderização no servidor
 - Otimização de re-renders com React.memo onde aplicável
-- Build otimizado com Vite
+- Build otimizado com Next.js
 
 ### 7. **Acessibilidade**
 - Componentes UI acessíveis (shadcn/ui)
@@ -101,7 +103,7 @@ src/
 ## 🛠️ Como Executar
 
 ### Pré-requisitos
-- Node.js 18+ 
+- Node.js 18+
 - npm ou yarn
 
 ### Instalação
@@ -116,13 +118,22 @@ npm run dev
 # Build para produção
 npm run build
 
-# Preview do build de produção
-npm run preview
+# Iniciar servidor de produção
+npm start
+
+# Executar testes
+npm test
+
+# Executar testes em modo watch
+npm run test:watch
+
+# Executar testes com coverage
+npm run test:coverage
 ```
 
 ## 📦 Personalização de Tema
 
-O projeto usa variáveis CSS definidas em `src/index.css`. Para personalizar as cores:
+O projeto usa variáveis CSS definidas em `src/app/globals.css`. Para personalizar as cores:
 
 ```css
 :root {
