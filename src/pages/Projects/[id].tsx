@@ -1,10 +1,11 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from 'next/navigation';
 import { useProjects } from '../../hooks/useProjects';
 import LoadingSpinner from '../../components/shared/LoadingSpinner';
 import EditProjectDialog from '../../components/projects/EditProjectDialog';
 
 export default function ProjectDetail() {
-  const { id } = useParams<{ id: string }>();
+  const params = useParams<{ id: string }>();
+  const id = params?.id;
   const { projects, isLoading, updateProject } = useProjects();
 
   const project = projects.find(p => p.id === id);

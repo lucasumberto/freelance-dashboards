@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Eye } from 'lucide-react';
 import { useProjects } from '../../hooks/useProjects';
 import DataTable from '../../components/shared/DataTable';
@@ -69,7 +69,7 @@ export default function Projects() {
       label: 'Ações',
       render: (_: any, row: Project) => (
         <Link
-          to={`/projects/${row.id}`}
+          href={`/projects/${row.id}`}
           className="inline-flex items-center gap-1 px-3 py-1.5 text-sm text-primary hover:text-primary/80 hover:bg-primary/10 rounded-lg transition-colors"
         >
           <Eye className="w-4 h-4" />
