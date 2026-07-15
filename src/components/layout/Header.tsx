@@ -1,24 +1,26 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Bell, Search, User } from 'lucide-react';
-import { useProjects } from '../../hooks/useProjects';
+'use client'
+
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { Bell, Search, User } from 'lucide-react'
+import { useProjects } from '../../hooks/useProjects'
 
 export default function Header() {
-  const navigate = useNavigate();
-  const { projects } = useProjects();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [showResults, setShowResults] = useState(false);
+  const router = useRouter()
+  const { projects } = useProjects()
+  const [searchQuery, setSearchQuery] = useState('')
+  const [showResults, setShowResults] = useState(false)
 
   const filteredProjects = projects.filter(project =>
     project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     project.client.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  )
 
   const handleProjectSelect = (projectId: string) => {
-    navigate(`/projects/${projectId}`);
-    setSearchQuery('');
-    setShowResults(false);
-  };
+    router.push(`/projects/${projectId}`)
+    setSearchQuery('')
+    setShowResults(false)
+  }
 
   return (
     <header className="bg-white border-b border-gray-200 px-6 py-4">

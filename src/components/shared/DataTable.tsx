@@ -1,17 +1,19 @@
-import { useState, useMemo } from 'react';
-import { Search } from 'lucide-react';
+'use client'
+
+import { useState, useMemo } from 'react'
+import { Search } from 'lucide-react'
 
 interface Column<T> {
-  key: keyof T;
-  label: string;
-  render?: (value: any, row: T) => React.ReactNode;
+  key: keyof T
+  label: string
+  render?: (value: any, row: T) => React.ReactNode
 }
 
 interface DataTableProps<T> {
-  data: T[];
-  columns: Column<T>[];
-  searchable?: boolean;
-  searchPlaceholder?: string;
+  data: T[]
+  columns: Column<T>[]
+  searchable?: boolean
+  searchPlaceholder?: string
 }
 
 export default function DataTable<T extends Record<string, any>>({

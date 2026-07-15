@@ -1,4 +1,6 @@
-import { useState } from 'react';
+'use client'
+
+import { useState } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -7,15 +9,15 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '../ui/dialog';
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import type { Project } from '../../types';
+} from '../ui/dialog'
+import { Button } from '../ui/button'
+import { Input } from '../ui/input'
+import { Label } from '../ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
+import type { Project } from '../../types'
 
 interface NewProjectDialogProps {
-  onProjectCreated: (project: Omit<Project, 'id' | 'progress' | 'actualCost'>) => void;
+  onProjectCreated: (project: Omit<Project, 'id' | 'progress' | 'actualCost'>) => void
 }
 
 export default function NewProjectDialog({ onProjectCreated }: NewProjectDialogProps) {

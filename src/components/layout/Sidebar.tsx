@@ -1,15 +1,18 @@
-import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, FolderKanban, DollarSign, Users, Settings } from 'lucide-react';
+'use client'
+
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { LayoutDashboard, FolderKanban, DollarSign, Users, Settings } from 'lucide-react'
 
 const menuItems = [
   { path: '/', icon: LayoutDashboard, label: 'Dashboard' },
   { path: '/projects', icon: FolderKanban, label: 'Projetos' },
   { path: '/finances', icon: DollarSign, label: 'Finanças' },
   { path: '/clients', icon: Users, label: 'Clientes' },
-];
+]
 
 export default function Sidebar() {
-  const location = useLocation();
+  const pathname = usePathname()
 
   return (
     <aside className="w-64 bg-white border-r border-gray-200 flex flex-col">
@@ -29,14 +32,14 @@ export default function Sidebar() {
       </div>
       <nav className="flex-1 p-4 space-y-1">
         {menuItems.map((item) => {
-          const Icon = item.icon;
-          const isActive = location.pathname === item.path || 
-            (item.path !== '/' && location.pathname.startsWith(item.path));
+          const Icon = item.icon
+          const isActive = pathname === item.path || 
+            (item.path !== '/' && pathname?.startsWith(item.path))
           
           return (
             <Link
               key={item.path}
-              to={item.path}
+              href={item.path}
               className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                 isActive
                   ? 'bg-blue-50 text-blue-600'
@@ -46,12 +49,12 @@ export default function Sidebar() {
               <Icon className="w-5 h-5" />
               <span className="font-medium">{item.label}</span>
             </Link>
-          );
+          )
         })}
       </nav>
       <div className="p-4 border-t border-gray-200">
         <Link
-          to="/settings"
+          href="/settings"
           className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
         >
           <Settings className="w-5 h-5" />

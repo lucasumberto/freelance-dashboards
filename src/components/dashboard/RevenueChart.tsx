@@ -1,8 +1,10 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import type { Revenue } from '../../types';
+'use client'
+
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import type { Revenue } from '../../types'
 
 interface RevenueChartProps {
-  data: Revenue[];
+  data: Revenue[]
 }
 
 export default function RevenueChart({ data }: RevenueChartProps) {

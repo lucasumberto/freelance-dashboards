@@ -1,5 +1,7 @@
-import { useState, useEffect } from 'react';
-import { Pencil } from 'lucide-react';
+'use client'
+
+import { useState, useEffect } from 'react'
+import { Pencil } from 'lucide-react'
 import {
   Dialog,
   DialogContent,
@@ -8,16 +10,16 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '../ui/dialog';
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import type { Transaction } from '../../types';
+} from '../ui/dialog'
+import { Button } from '../ui/button'
+import { Input } from '../ui/input'
+import { Label } from '../ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
+import type { Transaction } from '../../types'
 
 interface EditTransactionDialogProps {
-  transaction: Transaction;
-  onTransactionUpdated: (id: string, data: Partial<Transaction>) => void;
+  transaction: Transaction
+  onTransactionUpdated: (id: string, data: Partial<Transaction>) => void
 }
 
 export default function EditTransactionDialog({ transaction, onTransactionUpdated }: EditTransactionDialogProps) {

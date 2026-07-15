@@ -1,4 +1,6 @@
-import { useState } from 'react';
+'use client'
+
+import { useState } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -7,15 +9,15 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '../ui/dialog';
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import type { Transaction } from '../../types';
+} from '../ui/dialog'
+import { Button } from '../ui/button'
+import { Input } from '../ui/input'
+import { Label } from '../ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
+import type { Transaction } from '../../types'
 
 interface NewTransactionDialogProps {
-  onTransactionCreated: (data: Partial<Transaction>) => void;
+  onTransactionCreated: (data: Partial<Transaction>) => void
 }
 
 export default function NewTransactionDialog({ onTransactionCreated }: NewTransactionDialogProps) {

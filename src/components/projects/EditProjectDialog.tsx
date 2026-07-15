@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+'use client'
+
+import { useState, useEffect } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -7,16 +9,16 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '../ui/dialog';
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import type { Project } from '../../types';
+} from '../ui/dialog'
+import { Button } from '../ui/button'
+import { Input } from '../ui/input'
+import { Label } from '../ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
+import type { Project } from '../../types'
 
 interface EditProjectDialogProps {
-  project: Project;
-  onProjectUpdated: (id: string, data: Partial<Project>) => void;
+  project: Project
+  onProjectUpdated: (id: string, data: Partial<Project>) => void
 }
 
 export default function EditProjectDialog({ project, onProjectUpdated }: EditProjectDialogProps) {
