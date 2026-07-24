@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { mockHandlers } from '../api/mocks/handlers';
+import { api } from '../api/endpoints';
 import type { Project } from '../types';
 
 export function useProjects() {
@@ -7,25 +7,28 @@ export function useProjects() {
 
   const { data: projects, isLoading } = useQuery({
     queryKey: ['projects'],
-    queryFn: mockHandlers.getProjects,
+    queryFn: async () => {
+      const response = await api.projects.getAll();
+      return response.data;
+    },
   });
 
   const createMutation = useMutation({
-    mutationFn: (_data: Partial<Project>) => Promise.resolve({} as Project),
+    mutationFn: (data: Partial<Project>) => api.projects.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['projects'] });
     },
   });
 
   const updateMutation = useMutation({
-    mutationFn: (_: { id: string; data: Partial<Project> }) => Promise.resolve({} as Project),
+    mutationFn: ({ id, data }: { id: string; data: Partial<Project> }) => api.projects.update(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['projects'] });
     },
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (_id: string) => Promise.resolve(),
+    mutationFn: (id: string) => api.projects.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['projects'] });
     },

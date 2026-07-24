@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { mockHandlers } from '../api/mocks/handlers';
+import { api } from '../api/endpoints';
 import type { Client } from '../types';
 
 export function useClients() {
@@ -7,25 +7,28 @@ export function useClients() {
 
   const { data: clients, isLoading } = useQuery({
     queryKey: ['clients'],
-    queryFn: mockHandlers.getClients,
+    queryFn: async () => {
+      const response = await api.clients.getAll();
+      return response.data;
+    },
   });
 
   const createMutation = useMutation({
-    mutationFn: (_data: Partial<Client>) => Promise.resolve({} as Client),
+    mutationFn: (data: Partial<Client>) => api.clients.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['clients'] });
     },
   });
 
   const updateMutation = useMutation({
-    mutationFn: (_: { id: string; data: Partial<Client> }) => Promise.resolve({} as Client),
+    mutationFn: ({ id, data }: { id: string; data: Partial<Client> }) => api.clients.update(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['clients'] });
     },
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (_id: string) => Promise.resolve(),
+    mutationFn: (id: string) => api.clients.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['clients'] });
     },

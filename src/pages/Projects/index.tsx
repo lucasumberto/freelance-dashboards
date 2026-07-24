@@ -7,11 +7,10 @@ import NewProjectDialog from '../../components/projects/NewProjectDialog';
 import type { Project } from '../../types';
 
 export default function Projects() {
-  const { projects, isLoading } = useProjects();
+  const { projects, isLoading, createProject, isCreating } = useProjects();
 
   const handleProjectCreated = (projectData: Omit<Project, 'id' | 'progress' | 'actualCost'>) => {
-    console.log('Novo projeto:', projectData);
-    // TODO: Implementar lógica de criação de projeto
+    createProject(projectData);
   };
 
   const columns = [

@@ -1,15 +1,24 @@
 'use client'
 
 import { use } from 'react'
-import { useProjects } from '../../../hooks/useProjects'
+import { useQuery } from '@tanstack/react-query'
+import { api } from '../../../api/endpoints'
 import LoadingSpinner from '../../../components/shared/LoadingSpinner'
 import EditProjectDialog from '../../../components/projects/EditProjectDialog'
+import { useProjects } from '../../../hooks/useProjects'
 
 export default function ProjectDetail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
-  const { projects, isLoading, updateProject } = useProjects()
+  const { updateProject } = useProjects()
 
-  const project = projects.find(p => p.id === id)
+  const { data: project, isLoading } = useQuery({
+    queryKey: ['project', id],
+    queryFn: async () => {
+      const response = await api.projects.getById(id)
+      return response.data
+    },
+    enabled: !!id,
+  })
 
   if (isLoading) {
     return (

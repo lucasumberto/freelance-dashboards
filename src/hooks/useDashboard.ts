@@ -1,15 +1,21 @@
 import { useQuery } from '@tanstack/react-query';
-import { mockHandlers } from '../api/mocks/handlers';
+import { api } from '../api/endpoints';
 
 export function useDashboard() {
   const { data: projects, isLoading: projectsLoading } = useQuery({
     queryKey: ['projects'],
-    queryFn: mockHandlers.getProjects,
+    queryFn: async () => {
+      const response = await api.projects.getAll();
+      return response.data;
+    },
   });
 
   const { data: financialSummary, isLoading: financesLoading } = useQuery({
     queryKey: ['financial-summary'],
-    queryFn: mockHandlers.getFinancialSummary,
+    queryFn: async () => {
+      const response = await api.finances.getSummary();
+      return response.data;
+    },
   });
 
   const stats = [

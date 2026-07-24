@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { mockHandlers } from '../api/mocks/handlers';
+import { api } from '../api/endpoints';
 import type { Transaction } from '../types';
 
 export function useFinances() {
@@ -7,25 +7,28 @@ export function useFinances() {
 
   const { data: transactions, isLoading } = useQuery({
     queryKey: ['transactions'],
-    queryFn: mockHandlers.getTransactions,
+    queryFn: async () => {
+      const response = await api.finances.getTransactions();
+      return response.data;
+    },
   });
 
   const createMutation = useMutation({
-    mutationFn: (_data: Partial<Transaction>) => Promise.resolve({} as Transaction),
+    mutationFn: (data: Partial<Transaction>) => api.finances.getTransactions(),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
     },
   });
 
   const updateMutation = useMutation({
-    mutationFn: (_: { id: string; data: Partial<Transaction> }) => Promise.resolve({} as Transaction),
+    mutationFn: ({ id, data }: { id: string; data: Partial<Transaction> }) => api.finances.getTransactions(),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
     },
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (_id: string) => Promise.resolve(),
+    mutationFn: (id: string) => api.finances.getTransactions(),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
     },
