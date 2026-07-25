@@ -10,6 +10,14 @@ export function useDashboard() {
     },
   });
 
+  const { data: clients, isLoading: clientsLoading } = useQuery({
+    queryKey: ['clients'],
+    queryFn: async () => {
+      const response = await api.clients.getAll();
+      return response.data;
+    },
+  });
+
   const { data: financialSummary, isLoading: financesLoading } = useQuery({
     queryKey: ['financial-summary'],
     queryFn: async () => {
@@ -18,37 +26,46 @@ export function useDashboard() {
     },
   });
 
+  const { data: statsData, isLoading: statsLoading } = useQuery({
+    queryKey: ['dashboard-stats'],
+    queryFn: async () => {
+      const response = await api.dashboard.getStats();
+      return response.data;
+    },
+  });
+
   const stats = [
     {
       title: 'Receita Total',
       value: financialSummary ? `R$ ${financialSummary.totalRevenue.toLocaleString()}` : 'R$ 0',
-      change: '+12.5%',
+      change: statsData?.revenueChange,
       icon: 'DollarSign' as const,
     },
     {
       title: 'Projetos Ativos',
       value: projects?.filter(p => p.status === 'active').length.toString() || '0',
-      change: '+3',
+      change: statsData?.projectsChange,
       icon: 'FolderKanban' as const,
     },
     {
       title: 'Clientes',
-      value: '12',
-      change: '+2',
+      value: clients?.length.toString(),
+      change: statsData?.clientsChange,
       icon: 'Users' as const,
     },
     {
       title: 'Lucro Líquido',
       value: financialSummary ? `R$ ${financialSummary.netProfit.toLocaleString()}` : 'R$ 0',
-      change: '+8.2%',
+      change: statsData?.profitChange,
       icon: 'TrendingUp' as const,
     },
   ];
 
   return {
     projects: projects || [],
+    clients: clients || [],
     financialSummary,
     stats,
-    isLoading: projectsLoading || financesLoading,
+    isLoading: projectsLoading || financesLoading || clientsLoading || statsLoading,
   };
 }

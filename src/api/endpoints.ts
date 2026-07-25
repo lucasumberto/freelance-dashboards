@@ -1,5 +1,5 @@
 import apiClient from './client';
-import type { Project, Client, FinancialSummary, Transaction } from '../types';
+import type { Project, Client, FinancialSummary, Transaction, DashboardStats } from '../types';
 
 export const api = {
   projects: {
@@ -20,5 +20,8 @@ export const api = {
     getSummary: () => apiClient.get<FinancialSummary>('/finances/summary'),
     getTransactions: () => apiClient.get<Transaction[]>('/finances/transactions'),
     getRevenue: () => apiClient.get('/finances/revenue'),
+  },
+  dashboard: {
+    getStats: () => apiClient.get<DashboardStats>('/dashboard/stats'),
   },
 };
