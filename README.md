@@ -100,6 +100,13 @@ src/
 - Nomes de arquivos e componentes descritivos
 - Separação de concerns (UI, lógica, tipos)
 
+### 9. **SEO**
+- **Metadados** - Configuração centralizada com Metadata API do Next.js (títulos, descrições, keywords, robots)
+- **OpenGraph e Twitter Cards** - Compartilhamento otimizado em redes sociais
+- **Dados Estruturados** - Schema.org com JSON-LD (SoftwareApplication, BreadcrumbList)
+- **Sitemap** - Geração dinâmica com prioridades e frequências configuradas
+- **Arquitetura** - Server Components, URLs semânticas e performance otimizada
+
 ## 🛠️ Como Executar
 
 ### Pré-requisitos
