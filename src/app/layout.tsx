@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import './globals.css'
+import '../index.css'
 import Layout from '../components/layout/Layout'
 import { QueryClientProvider } from '../lib/react-query/providers'
 import StructuredData from '../components/seo/StructuredData'
