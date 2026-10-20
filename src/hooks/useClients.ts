@@ -13,25 +13,25 @@ export function useClients() {
     },
   });
 
+  // A lista e as estatísticas do dashboard dependem dos clientes
+  const invalidateClients = () => {
+    queryClient.invalidateQueries({ queryKey: ['clients'] });
+    queryClient.invalidateQueries({ queryKey: ['dashboard-stats'] });
+  };
+
   const createMutation = useMutation({
     mutationFn: (data: Partial<Client>) => api.clients.create(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['clients'] });
-    },
+    onSuccess: invalidateClients,
   });
 
   const updateMutation = useMutation({
     mutationFn: ({ id, data }: { id: string; data: Partial<Client> }) => api.clients.update(id, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['clients'] });
-    },
+    onSuccess: invalidateClients,
   });
 
   const deleteMutation = useMutation({
     mutationFn: (id: string) => api.clients.delete(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['clients'] });
-    },
+    onSuccess: invalidateClients,
   });
 
   return {

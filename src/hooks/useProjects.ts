@@ -13,25 +13,26 @@ export function useProjects() {
     },
   });
 
+  // Lista, detalhe (['project', id]) e estatísticas do dashboard dependem dos projetos
+  const invalidateProjects = () => {
+    queryClient.invalidateQueries({ queryKey: ['projects'] });
+    queryClient.invalidateQueries({ queryKey: ['project'] });
+    queryClient.invalidateQueries({ queryKey: ['dashboard-stats'] });
+  };
+
   const createMutation = useMutation({
     mutationFn: (data: Partial<Project>) => api.projects.create(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['projects'] });
-    },
+    onSuccess: invalidateProjects,
   });
 
   const updateMutation = useMutation({
     mutationFn: ({ id, data }: { id: string; data: Partial<Project> }) => api.projects.update(id, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['projects'] });
-    },
+    onSuccess: invalidateProjects,
   });
 
   const deleteMutation = useMutation({
     mutationFn: (id: string) => api.projects.delete(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['projects'] });
-    },
+    onSuccess: invalidateProjects,
   });
 
   return {

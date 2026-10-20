@@ -19,6 +19,9 @@ export const api = {
   finances: {
     getSummary: () => apiClient.get<FinancialSummary>('/finances/summary'),
     getTransactions: () => apiClient.get<Transaction[]>('/finances/transactions'),
+    createTransaction: (data: Partial<Transaction>) => apiClient.post<Transaction>('/finances/transactions', data),
+    updateTransaction: (id: string, data: Partial<Transaction>) => apiClient.put<Transaction>(`/finances/transactions/${id}`, data),
+    deleteTransaction: (id: string) => apiClient.delete(`/finances/transactions/${id}`),
     getRevenue: () => apiClient.get('/finances/revenue'),
   },
   dashboard: {

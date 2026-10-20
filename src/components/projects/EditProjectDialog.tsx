@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -15,37 +15,34 @@ import { Input } from '../ui/input'
 import { Label } from '../ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import type { Project } from '../../types'
+import { toDateInput } from '../../lib/date'
 
 interface EditProjectDialogProps {
   project: Project
   onProjectUpdated: (id: string, data: Partial<Project>) => void
 }
 
+function toFormData(project: Project) {
+  return {
+    name: project.name,
+    client: project.client,
+    status: project.status,
+    startDate: toDateInput(project.startDate),
+    endDate: toDateInput(project.endDate),
+    budget: project.budget.toString(),
+    description: project.description || '',
+  };
+}
+
 export default function EditProjectDialog({ project, onProjectUpdated }: EditProjectDialogProps) {
   const [open, setOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    client: '',
-    status: 'active' as Project['status'],
-    startDate: '',
-    endDate: '',
-    budget: '',
-    description: '',
-  });
+  const [formData, setFormData] = useState(() => toFormData(project));
 
-  useEffect(() => {
-    if (project) {
-      setFormData({
-        name: project.name,
-        client: project.client,
-        status: project.status,
-        startDate: project.startDate ? new Date(project.startDate).toISOString().split('T')[0] : '',
-        endDate: project.endDate ? new Date(project.endDate).toISOString().split('T')[0] : '',
-        budget: project.budget.toString(),
-        description: project.description || '',
-      });
-    }
-  }, [project]);
+  // Recarrega os dados do projeto a cada abertura, descartando edições canceladas
+  const handleOpenChange = (next: boolean) => {
+    if (next) setFormData(toFormData(project));
+    setOpen(next);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,7 +62,7 @@ export default function EditProjectDialog({ project, onProjectUpdated }: EditPro
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button>Editar</Button>
       </DialogTrigger>

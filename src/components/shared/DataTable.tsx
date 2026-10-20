@@ -6,7 +6,8 @@ import { Search } from 'lucide-react'
 interface Column<T> {
   key: keyof T
   label: string
-  render?: (value: any, row: T) => React.ReactNode
+  // sintaxe de método: permite que cada coluna tipe `value` de forma específica (ex.: string)
+  render?(value: T[keyof T], row: T): React.ReactNode
 }
 
 interface DataTableProps<T> {
@@ -16,7 +17,7 @@ interface DataTableProps<T> {
   searchPlaceholder?: string
 }
 
-export default function DataTable<T extends Record<string, any>>({
+export default function DataTable<T extends object>({
   data,
   columns,
   searchable = false,
@@ -37,38 +38,38 @@ export default function DataTable<T extends Record<string, any>>({
   }, [data, searchTerm, columns]);
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+    <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
       {searchable && (
-        <div className="p-4 border-b border-gray-200">
+        <div className="p-4 border-b border-border">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <input
               type="text"
               placeholder={searchPlaceholder}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 bg-background text-foreground placeholder:text-muted-foreground border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent"
             />
           </div>
         </div>
       )}
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-gray-50">
+          <thead className="bg-muted">
             <tr>
               {columns.map((column) => (
                 <th
                   key={String(column.key)}
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider"
                 >
                   {column.label}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y divide-border">
             {filteredData.map((row, index) => (
-              <tr key={index} className="hover:bg-gray-50 transition-colors">
+              <tr key={index} className="hover:bg-muted transition-colors">
                 {columns.map((column) => (
                   <td key={String(column.key)} className="px-6 py-4 whitespace-nowrap">
                     {column.render ? column.render(row[column.key], row) : String(row[column.key])}
@@ -80,7 +81,7 @@ export default function DataTable<T extends Record<string, any>>({
         </table>
       </div>
       {filteredData.length === 0 && (
-        <div className="p-8 text-center text-gray-500">
+        <div className="p-8 text-center text-muted-foreground">
           Nenhum dado encontrado
         </div>
       )}

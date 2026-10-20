@@ -43,7 +43,6 @@ src/
 │   ├── projects/     # Página de projetos
 │   ├── layout.tsx    # Layout raiz da aplicação
 │   └── page.tsx      # Página inicial (dashboard)
-├── assets/           # Imagens e recursos estáticos
 ├── components/       # Componentes reutilizáveis
 │   ├── clients/      # Componentes específicos de clientes
 │   ├── dashboard/    # Componentes do dashboard
@@ -51,9 +50,9 @@ src/
 │   ├── projects/     # Componentes específicos de projetos
 │   ├── shared/       # Componentes compartilhados (DataTable, LoadingSpinner)
 │   └── ui/           # Componentes UI base (shadcn/ui)
-├── hooks/            # Custom hooks (useProjects, useClients, useFinances)
+├── hooks/            # Custom hooks (useProjects, useClients, useFinances, useTheme)
 ├── types/            # Definições de tipos TypeScript
-└── globals.css       # Estilos globais e variáveis CSS
+└── index.css         # Estilos globais e variáveis CSS (tema claro/escuro)
 ```
 
 ## 🎨 Boas Práticas Implementadas
@@ -74,10 +73,10 @@ src/
 - Estado local apenas quando necessário (formulários, modais)
 
 ### 4. **Estilização**
-- Sistema de design baseado em variáveis CSS para fácil troca de temas
+- Sistema de design baseado em variáveis CSS, com tema claro e escuro
+- Componentes usam apenas tokens (`bg-card`, `text-muted-foreground`, `bg-primary/10`…), sem cores fixas
+- Tema salvo no `localStorage`, com fallback para a preferência do sistema e sem flash na carga
 - Uso de componentes UI consistentes (shadcn/ui)
-- Classes utilitárias do TailwindCSS para estilização rápida
-- Variáveis CSS como `--primary`, `--foreground` para consistência
 
 ### 5. **Roteamento**
 - Next.js App Router com rotas baseadas em sistema de arquivos
@@ -85,8 +84,8 @@ src/
 - Links semânticos com componente Link do Next.js
 
 ### 6. **Performance**
-- Server Components do Next.js para renderização no servidor
-- Otimização de re-renders com React.memo onde aplicável
+- Cache e deduplicação de requisições com TanStack Query
+- Layout raiz e metadados renderizados no servidor; páginas interativas como Client Components
 - Build otimizado com Next.js
 
 ### 7. **Acessibilidade**
@@ -140,19 +139,19 @@ npm run test:coverage
 
 ## 📦 Personalização de Tema
 
-O projeto usa variáveis CSS definidas em `src/app/globals.css`. Para personalizar as cores:
+O projeto usa variáveis CSS definidas em `src/index.css`. Para personalizar as cores:
 
 ```css
 :root {
-  --primary: oklch(0.55 0.22 250);        /* Cor principal */
-  --primary-foreground: oklch(0.985 0 0); /* Texto sobre cor principal */
-  --background: oklch(1 0 0);            /* Fundo */
-  --foreground: oklch(0.145 0 0);         /* Texto principal */
+  --primary: #3B82F6;            /* Cor principal */
+  --primary-foreground: #FFFFFF; /* Texto sobre cor principal */
+  --background: #F0F4F8;         /* Fundo */
+  --foreground: #1A202C;         /* Texto principal */
   /* ... outras variáveis */
 }
 ```
 
-Para modo escuro, modifique as variáveis na classe `.dark`.
+Para modo escuro, modifique as variáveis na classe `.dark`. O botão de sol/lua no cabeçalho alterna entre os temas.
 
 ## 📄 Licença
 

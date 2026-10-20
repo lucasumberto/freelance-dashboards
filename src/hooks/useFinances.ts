@@ -13,25 +13,26 @@ export function useFinances() {
     },
   });
 
+  // Transações alimentam o resumo financeiro e as estatísticas do dashboard
+  const invalidateFinances = () => {
+    queryClient.invalidateQueries({ queryKey: ['transactions'] });
+    queryClient.invalidateQueries({ queryKey: ['financial-summary'] });
+    queryClient.invalidateQueries({ queryKey: ['dashboard-stats'] });
+  };
+
   const createMutation = useMutation({
-    mutationFn: (data: Partial<Transaction>) => api.finances.getTransactions(),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['transactions'] });
-    },
+    mutationFn: (data: Partial<Transaction>) => api.finances.createTransaction(data),
+    onSuccess: invalidateFinances,
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }: { id: string; data: Partial<Transaction> }) => api.finances.getTransactions(),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['transactions'] });
-    },
+    mutationFn: ({ id, data }: { id: string; data: Partial<Transaction> }) => api.finances.updateTransaction(id, data),
+    onSuccess: invalidateFinances,
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id: string) => api.finances.getTransactions(),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['transactions'] });
-    },
+    mutationFn: (id: string) => api.finances.deleteTransaction(id),
+    onSuccess: invalidateFinances,
   });
 
   return {

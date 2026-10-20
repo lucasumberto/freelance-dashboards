@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Pencil } from 'lucide-react'
 import {
   Dialog,
@@ -22,27 +22,25 @@ interface EditClientDialogProps {
   onClientUpdated: (id: string, data: Partial<Client>) => void
 }
 
+function toFormData(client: Client) {
+  return {
+    name: client.name,
+    email: client.email,
+    company: client.company || '',
+    phone: client.phone || '',
+    status: client.status,
+  };
+}
+
 export default function EditClientDialog({ client, onClientUpdated }: EditClientDialogProps) {
   const [open, setOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    company: '',
-    phone: '',
-    status: 'active' as Client['status'],
-  });
+  const [formData, setFormData] = useState(() => toFormData(client));
 
-  useEffect(() => {
-    if (client) {
-      setFormData({
-        name: client.name,
-        email: client.email,
-        company: client.company || '',
-        phone: client.phone || '',
-        status: client.status,
-      });
-    }
-  }, [client]);
+  // Recarrega os dados do cliente a cada abertura, descartando edições canceladas
+  const handleOpenChange = (next: boolean) => {
+    if (next) setFormData(toFormData(client));
+    setOpen(next);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,7 +58,7 @@ export default function EditClientDialog({ client, onClientUpdated }: EditClient
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <button className="inline-flex items-center gap-1 px-3 py-1.5 text-sm text-primary hover:text-primary/80 hover:bg-primary/10 rounded-lg transition-colors">
           <Pencil className="w-4 h-4" />

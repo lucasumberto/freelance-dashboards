@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Pencil } from 'lucide-react'
 import {
   Dialog,
@@ -16,33 +16,32 @@ import { Input } from '../ui/input'
 import { Label } from '../ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import type { Transaction } from '../../types'
+import { toDateInput } from '../../lib/date'
 
 interface EditTransactionDialogProps {
   transaction: Transaction
   onTransactionUpdated: (id: string, data: Partial<Transaction>) => void
 }
 
+function toFormData(transaction: Transaction) {
+  return {
+    type: transaction.type,
+    amount: transaction.amount.toString(),
+    description: transaction.description,
+    category: transaction.category,
+    date: toDateInput(transaction.date),
+  };
+}
+
 export default function EditTransactionDialog({ transaction, onTransactionUpdated }: EditTransactionDialogProps) {
   const [open, setOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    type: 'income' as Transaction['type'],
-    amount: '',
-    description: '',
-    category: '',
-    date: '',
-  });
+  const [formData, setFormData] = useState(() => toFormData(transaction));
 
-  useEffect(() => {
-    if (transaction) {
-      setFormData({
-        type: transaction.type,
-        amount: transaction.amount.toString(),
-        description: transaction.description,
-        category: transaction.category,
-        date: transaction.date ? new Date(transaction.date).toISOString().split('T')[0] : '',
-      });
-    }
-  }, [transaction]);
+  // Recarrega os dados da transação a cada abertura, descartando edições canceladas
+  const handleOpenChange = (next: boolean) => {
+    if (next) setFormData(toFormData(transaction));
+    setOpen(next);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,7 +59,7 @@ export default function EditTransactionDialog({ transaction, onTransactionUpdate
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <button className="inline-flex items-center gap-1 px-3 py-1.5 text-sm text-primary hover:text-primary/80 hover:bg-primary/10 rounded-lg transition-colors">
           <Pencil className="w-4 h-4" />

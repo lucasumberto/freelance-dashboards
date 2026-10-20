@@ -15,6 +15,7 @@ import { Input } from '../ui/input'
 import { Label } from '../ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import type { Transaction } from '../../types'
+import { todayInput } from '../../lib/date'
 
 interface NewTransactionDialogProps {
   onTransactionCreated: (data: Partial<Transaction>) => void
@@ -27,7 +28,7 @@ export default function NewTransactionDialog({ onTransactionCreated }: NewTransa
     amount: '',
     description: '',
     category: '',
-    date: new Date().toISOString().split('T')[0],
+    date: todayInput(),
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -48,7 +49,7 @@ export default function NewTransactionDialog({ onTransactionCreated }: NewTransa
       amount: '',
       description: '',
       category: '',
-      date: new Date().toISOString().split('T')[0],
+      date: todayInput(),
     });
   };
 

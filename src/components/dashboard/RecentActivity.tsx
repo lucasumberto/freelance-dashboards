@@ -36,21 +36,21 @@ export default function RecentActivity({ projects }: RecentActivityProps) {
   };
 
   return (
-    <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">Atividade Recente</h3>
+    <div className="bg-card rounded-xl p-6 border border-border shadow-sm">
+      <h3 className="text-lg font-semibold text-foreground mb-4">Atividade Recente</h3>
       <div className="space-y-4">
         {recentProjects.map((project) => (
-          <div key={project.id} className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors">
-            <div className="p-2 bg-gray-100 rounded-lg">
+          <div key={project.id} className="flex items-center gap-4 p-3 hover:bg-muted rounded-lg transition-colors">
+            <div className="p-2 bg-muted rounded-lg">
               {getStatusIcon(project.status)}
             </div>
             <div className="flex-1">
-              <p className="font-medium text-gray-900">{project.name}</p>
-              <p className="text-sm text-gray-500">{project.client}</p>
+              <p className="font-medium text-foreground">{project.name}</p>
+              <p className="text-sm text-muted-foreground">{project.client}</p>
             </div>
             <div className="text-right">
-              <span className="text-sm font-medium text-gray-900">{getStatusLabel(project.status)}</span>
-              <p className="text-xs text-gray-500">{project.progress}%</p>
+              <span className="text-sm font-medium text-foreground">{getStatusLabel(project.status)}</span>
+              <p className="text-xs text-muted-foreground">{project.progress}%</p>
             </div>
           </div>
         ))}

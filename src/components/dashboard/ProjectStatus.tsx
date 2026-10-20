@@ -20,8 +20,8 @@ export default function ProjectStatus({ projects }: ProjectStatusProps) {
   const total = projects.length;
 
   return (
-    <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm h-full">
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">Status dos Projetos</h3>
+    <div className="bg-card rounded-xl p-6 border border-border shadow-sm h-full">
+      <h3 className="text-lg font-semibold text-foreground mb-4">Status dos Projetos</h3>
       <div className="space-y-4">
         {Object.entries(statusCount).map(([status, count]) => {
           const { label, color } = statusLabels[status] || { label: status, color: 'bg-gray-500' };
@@ -30,10 +30,10 @@ export default function ProjectStatus({ projects }: ProjectStatusProps) {
           return (
             <div key={status}>
               <div className="flex justify-between mb-1">
-                <span className="text-sm text-gray-600">{label}</span>
-                <span className="text-sm font-medium text-gray-900">{count}</span>
+                <span className="text-sm text-muted-foreground">{label}</span>
+                <span className="text-sm font-medium text-foreground">{count}</span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
+              <div className="w-full bg-muted rounded-full h-2">
                 <div
                   className={`${color} h-2 rounded-full transition-all`}
                   style={{ width: `${percentage}%` }}
