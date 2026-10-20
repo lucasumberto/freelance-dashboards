@@ -1,5 +1,9 @@
+// Permite modificadores de opacidade (ex.: bg-primary/10) com variáveis CSS em hex
+const token = (name) => `color-mix(in srgb, var(--${name}) calc(<alpha-value> * 100%), transparent)`
+
 /** @type {import('tailwindcss').Config} */
 export default {
+    darkMode: 'class',
     content: [
         "./src/**/*.{js,ts,jsx,tsx}",
         "./app/**/*.{js,ts,jsx,tsx}",
@@ -7,38 +11,38 @@ export default {
     theme: {
         extend: {
             colors: {
-                border: 'var(--border)',
-                input: 'var(--input)',
-                ring: 'var(--ring)',
-                background: 'var(--background)',
-                foreground: 'var(--foreground)',
+                border: token('border'),
+                input: token('input'),
+                ring: token('ring'),
+                background: token('background'),
+                foreground: token('foreground'),
                 primary: {
-                    DEFAULT: 'var(--primary)',
-                    foreground: 'var(--primary-foreground)',
+                    DEFAULT: token('primary'),
+                    foreground: token('primary-foreground'),
                 },
                 secondary: {
-                    DEFAULT: 'var(--secondary)',
-                    foreground: 'var(--secondary-foreground)',
+                    DEFAULT: token('secondary'),
+                    foreground: token('secondary-foreground'),
                 },
                 destructive: {
-                    DEFAULT: 'var(--destructive)',
-                    foreground: 'var(--destructive-foreground)',
+                    DEFAULT: token('destructive'),
+                    foreground: token('destructive-foreground'),
                 },
                 muted: {
-                    DEFAULT: 'var(--muted)',
-                    foreground: 'var(--muted-foreground)',
+                    DEFAULT: token('muted'),
+                    foreground: token('muted-foreground'),
                 },
                 accent: {
-                    DEFAULT: 'var(--accent)',
-                    foreground: 'var(--accent-foreground)',
+                    DEFAULT: token('accent'),
+                    foreground: token('accent-foreground'),
                 },
                 popover: {
-                    DEFAULT: 'var(--popover)',
-                    foreground: 'var(--popover-foreground)',
+                    DEFAULT: token('popover'),
+                    foreground: token('popover-foreground'),
                 },
                 card: {
-                    DEFAULT: 'var(--card)',
-                    foreground: 'var(--card-foreground)',
+                    DEFAULT: token('card'),
+                    foreground: token('card-foreground'),
                 },
             },
             borderRadius: {

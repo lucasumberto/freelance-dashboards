@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import '../index.css'
 import Layout from '../components/layout/Layout'
 import { QueryClientProvider } from '../lib/react-query/providers'
@@ -39,11 +39,6 @@ export const metadata: Metadata = {
     description: 'Sistema completo de gestão para freelancers. Controle seus projetos, finanças e clientes em um único lugar.',
     creator: '@freelancedash',
   },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-  },
   icons: {
     icon: '/favicon.svg',
     shortcut: '/favicon.svg',
@@ -55,6 +50,21 @@ export const metadata: Metadata = {
     canonical: '/',
   },
 }
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+}
+
+// Aplica o tema salvo (ou a preferência do sistema) antes da primeira pintura
+const themeScript = `
+try {
+  var t = localStorage.getItem('theme');
+  if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  document.documentElement.classList.toggle('dark', t === 'dark');
+} catch (e) {}
+`
 
 export default function RootLayout({
   children,
@@ -112,7 +122,10 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body>
         <StructuredData data={organizationSchema} />
         <StructuredData data={breadcrumbSchema} />

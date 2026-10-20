@@ -29,7 +29,7 @@ export default function Clients() {
       label: 'Status',
       render: (value: string) => (
         <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-          value === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+          value === 'active' ? 'bg-green-100 text-green-800 dark:bg-green-500/15 dark:text-green-400' : 'bg-muted text-muted-foreground'
         }`}>
           {value === 'active' ? 'Ativo' : 'Inativo'}
         </span>
@@ -67,7 +67,7 @@ export default function Clients() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">Clientes</h1>
+        <h1 className="text-2xl font-bold text-foreground">Clientes</h1>
         <NewClientDialog onClientCreated={(data) => createClient(data)} />
       </div>
       

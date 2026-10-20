@@ -28,18 +28,18 @@ export default function StatsCards({ stats }: StatsCardsProps) {
         const isPositive = stat.change.startsWith('+');
         
         return (
-          <div key={stat.title} className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+          <div key={stat.title} className="bg-card rounded-xl p-6 border border-border shadow-sm">
             <div className="flex items-center justify-between">
-              <div className="p-3 bg-blue-50 rounded-lg">
-                <Icon className="w-6 h-6 text-blue-600" />
+              <div className="p-3 bg-primary/10 rounded-lg">
+                <Icon className="w-6 h-6 text-primary" />
               </div>
-              <span className={`text-sm font-medium ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
+              <span className={`text-sm font-medium ${isPositive ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
                 {stat.change}
               </span>
             </div>
             <div className="mt-4">
-              <p className="text-sm text-gray-600">{stat.title}</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{stat.value}</p>
+              <p className="text-sm text-muted-foreground">{stat.title}</p>
+              <p className="text-2xl font-bold text-foreground mt-1">{stat.value}</p>
             </div>
           </div>
         );

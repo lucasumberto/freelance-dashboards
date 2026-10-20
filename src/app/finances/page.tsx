@@ -6,6 +6,7 @@ import LoadingSpinner from '../../components/shared/LoadingSpinner'
 import NewTransactionDialog from '../../components/finances/NewTransactionDialog'
 import EditTransactionDialog from '../../components/finances/EditTransactionDialog'
 import type { Transaction } from '../../types'
+import { formatDate } from '../../lib/date'
 
 export default function Finances() {
   const { transactions, isLoading, createTransaction, updateTransaction } = useFinances()
@@ -16,7 +17,7 @@ export default function Finances() {
       label: 'Tipo',
       render: (value: string) => (
         <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-          value === 'income' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+          value === 'income' ? 'bg-green-100 text-green-800 dark:bg-green-500/15 dark:text-green-400' : 'bg-red-100 text-red-800 dark:bg-red-500/15 dark:text-red-400'
         }`}>
           {value === 'income' ? 'Receita' : 'Despesa'}
         </span>
@@ -30,7 +31,7 @@ export default function Finances() {
       key: 'amount' as keyof Transaction,
       label: 'Valor',
       render: (value: number, row: Transaction) => (
-        <span className={row.type === 'income' ? 'text-green-600' : 'text-red-600'}>
+        <span className={row.type === 'income' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}>
           {row.type === 'income' ? '+' : '-'} R$ {value.toLocaleString()}
         </span>
       ),
@@ -42,7 +43,7 @@ export default function Finances() {
     {
       key: 'date' as keyof Transaction,
       label: 'Data',
-      render: (value: string) => new Date(value).toLocaleDateString('pt-BR'),
+      render: (value: string) => formatDate(value),
     },
     {
       key: 'actions' as keyof Transaction,
@@ -67,7 +68,7 @@ export default function Finances() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">Finanças</h1>
+        <h1 className="text-2xl font-bold text-foreground">Finanças</h1>
         <NewTransactionDialog onTransactionCreated={(data) => createTransaction(data)} />
       </div>
       
